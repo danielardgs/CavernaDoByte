@@ -13,7 +13,6 @@ public class DanielaRobot extends Robot {
             moveInPattern();
         }
     }
-
     public void moveInPattern() {
         ahead(400);   
         turnLeft(90); 
