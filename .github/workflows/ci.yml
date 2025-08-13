@@ -21,12 +21,15 @@ jobs:
         with:
           java-version: '11'  # Define a versão do Java, ajuste conforme necessário
 
-      - name: Install Robocode
+      - name: Unzip and Install Robocode
         run: |
-          # Baixa e instala o Robocode
-          wget https://robocode.sourceforge.io/downloads/robocode_1.9.3.7_windows.zip -O robocode.zip
-          unzip robocode.zip -d robocode  # Descompacta o Robocode na pasta robocode
-          export ROBODECODE_HOME=$(pwd)/robocode  # Define a variável de ambiente ROBODECODE_HOME
+          # Descompacta o arquivo robocode-main.zip que foi adicionado ao repositório
+          unzip robocode-main.zip -d robocode  # Descompacta na pasta robocode
+          cd robocode/robocode-main  # Acessa o diretório do Robocode
+
+          # Compila o código-fonte do Robocode usando o Gradle
+          ./gradlew build
+          export ROBODECODE_HOME=$(pwd)  # Define a variável de ambiente para o Robocode
 
       - name: Compile Java program
         run: javac DanielaRobot.java  # Compila o arquivo .java
