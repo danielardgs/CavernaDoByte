@@ -22,7 +22,6 @@ jobs:
           java-version: '11'  # Versão do Java (ajuste conforme necessário)
 
       - name: Compile Java program
-        run: javac RoboVeloz.java  # Compila o código Java
-
+        run: javac DanielaRobot.java  # Compila o código Java
       - name: Run Java program
-        run: java RoboVeloz  # Executa o código Java
+        run: java DanielaRobot  # Executa o código Java
