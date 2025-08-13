@@ -23,11 +23,11 @@ jobs:
 
       - name: Install Gradle
         run: |
-          # Baixa e instala o Gradle
-          echo "Baixando o Gradle..."
+          echo "Baixando e instalando o Gradle..."
           wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip -O gradle.zip
           unzip gradle.zip -d gradle
           export PATH=$PATH:$(pwd)/gradle/gradle-7.5.1/bin  # Adiciona o Gradle ao PATH
+          gradle -v  # Exibe a versão do Gradle para verificar a instalação
 
       - name: Generate Gradle Wrapper
         run: |
@@ -42,7 +42,11 @@ jobs:
           export ROBODECODE_HOME=$(pwd)  # Define a variável de ambiente para o Robocode
 
       - name: Compile Java program
-        run: javac DanielaRobot.java  # Compila o arquivo .java
+        run: |
+          echo "Compilando o código Java..."
+          javac DanielaRobot.java  # Compila o arquivo .java
 
       - name: Run Java program
-        run: java DanielaRobot  # Executa o código Java compilado
+        run: |
+          echo "Executando o código Java..."
+          java DanielaRobot  # Executa o código Java compilado
