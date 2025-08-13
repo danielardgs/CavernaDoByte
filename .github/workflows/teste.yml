@@ -10,8 +10,8 @@ on:
 
 jobs:
   call-reusable-workflow:
-    # Define o job que chama o workflow reutilizável
-    uses: ./.github/workflows/ci.yml  # Caminho correto para o workflow reutilizável
+    # Chama o workflow reutilizável definido em ci.yml
+    uses: ./.github/workflows/ci.yml  # Caminho para o workflow reutilizável
 
     with:
-      message: "Teste Realizado com sucesso"  # Passa a mensagem para o workflow reutilizável
+      message: "Teste Realizado com sucesso"  # Passa o parâmetro 'message' para o workflow reutilizável
