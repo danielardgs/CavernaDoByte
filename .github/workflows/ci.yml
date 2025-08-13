@@ -1,0 +1,28 @@
+name: Build and Run Java Program
+
+on:
+  push:
+    branches:
+      - main  # Ação quando houver push na branch principal
+  pull_request:
+    branches:
+      - main  # Ação quando houver pull request na branch principal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # Faz checkout do código do repositório
+
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'  # Versão do Java (ajuste conforme necessário)
+
+      - name: Compile Java program
+        run: javac RoboVeloz.java  # Compila o código Java
+
+      - name: Run Java program
+        run: java RoboVeloz  # Executa o código Java
