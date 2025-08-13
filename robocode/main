@@ -1,0 +1,3 @@
+git add robocode-main.zip  # Adiciona o arquivo ao Git
+git commit -m "Adiciona o arquivo robocode-main.zip"  # Comita a alteração
+git push origin main  # Envia para o repositório no GitHub
