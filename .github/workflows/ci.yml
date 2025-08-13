@@ -21,14 +21,12 @@ jobs:
         with:
           java-version: '11'  # Define a versão do Java, ajuste conforme necessário
 
-      - name: Unzip and Install Robocode
+      - name: Install Robocode (using robocode directory)
         run: |
-          # Descompacta o arquivo robocode-main.zip que foi adicionado ao repositório
-          unzip robocode-main.zip -d robocode  # Descompacta na pasta robocode
-          cd robocode/robocode-main  # Acessa o diretório do Robocode
-
-          # Compila o código-fonte do Robocode usando o Gradle
-          ./gradlew build
+          # Acesse o diretório onde o Robocode está localizado
+          cd robocode  # Acessa a pasta 'robocode' diretamente no repositório
+          # Compile o Robocode usando o Gradle (se o gradle já estiver configurado corretamente)
+          ./gradlew build  # Compila o código do Robocode
           export ROBODECODE_HOME=$(pwd)  # Define a variável de ambiente para o Robocode
 
       - name: Compile Java program
