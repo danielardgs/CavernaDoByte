@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v2  # Atualizado para a versão mais recente do setup-java
         with:
           java-version: '17'  # Atualizado para Java 17
-          distribution: 'adoptopenjdk'  # Especifica a distribuição do JDK
+          distribution: 'temurin'  # Alterado para Temurin, a distribuição oficial do OpenJDK
 
       - name: Install Gradle
         run: |
