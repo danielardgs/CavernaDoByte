@@ -15,3 +15,8 @@ jobs:
 
     with:
       message: "Teste Realizado com sucesso"  # Passa o parâmetro 'message' para o workflow reutilizável
+      
+git add .github/workflows/teste.yml  # Adiciona o arquivo de workflow principal
+git add .github/workflows/ci.yml  # Adiciona o arquivo de workflow reutilizável
+git commit -m "Configura o Gradle e a execução do Robocode corretamente"  # Comita as alterações
+git push origin main  # Faz o push para a branch principal
