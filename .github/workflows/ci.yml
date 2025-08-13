@@ -23,9 +23,8 @@ jobs:
 
       - name: Install Robocode (using robocode directory)
         run: |
-          # Acesse o diretório onde o Robocode está localizado
-          cd robocode  # Acessa a pasta 'robocode' diretamente no repositório
-          # Compile o Robocode usando o Gradle (se o gradle já estiver configurado corretamente)
+          cd robocode  # Acessa a pasta 'robocode'
+          chmod +x gradlew  # Dá permissão de execução ao script gradlew
           ./gradlew build  # Compila o código do Robocode
           export ROBODECODE_HOME=$(pwd)  # Define a variável de ambiente para o Robocode
 
