@@ -21,6 +21,16 @@ jobs:
         with:
           java-version: '11'  # Define a versão do Java, ajuste conforme necessário
 
+      - name: Install Gradle
+        run: |
+          # Baixa e instala o Gradle
+          wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip -O gradle.zip
+          unzip gradle.zip -d gradle
+          export PATH=$PATH:$(pwd)/gradle/gradle-7.5.1/bin  # Adiciona o Gradle ao PATH
+
+      - name: Generate Gradle Wrapper
+        run: gradle wrapper  # Gera o Gradle Wrapper (gradlew)
+
       - name: Install Robocode (using robocode directory)
         run: |
           cd robocode  # Acessa a pasta 'robocode'
