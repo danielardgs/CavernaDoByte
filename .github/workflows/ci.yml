@@ -3,15 +3,15 @@ name: Build and Run Java Program
 on:
   push:
     branches:
-      - main  # Ação quando houver push na branch principal
+      - main  # O workflow é acionado quando há um push para a branch principal
   pull_request:
     branches:
-      - main  # Ação quando houver pull request na branch principal
+      - main  # O workflow também é acionado para pull requests na branch principal
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest  # Usa a máquina Ubuntu para executar os comandos
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2  # Faz checkout do código do repositório
@@ -19,9 +19,17 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v1
         with:
-          java-version: '11'  # Versão do Java (ajuste conforme necessário)
+          java-version: '11'  # Define a versão do Java, ajuste conforme necessário
+
+      - name: Install Robocode
+        run: |
+          # Baixa e instala o Robocode
+          wget https://robocode.sourceforge.io/downloads/robocode_1.9.3.7_windows.zip -O robocode.zip
+          unzip robocode.zip -d robocode  # Descompacta o Robocode na pasta robocode
+          export ROBODECODE_HOME=$(pwd)/robocode  # Define a variável de ambiente ROBODECODE_HOME
 
       - name: Compile Java program
-        run: javac DanielaRobot.java  # Compila o código Java
+        run: javac DanielaRobot.java  # Compila o arquivo .java
+
       - name: Run Java program
-        run: java DanielaRobot  # Executa o código Java
+        run: java DanielaRobot  # Executa o código Java compilado
