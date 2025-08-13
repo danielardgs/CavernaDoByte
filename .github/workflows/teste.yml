@@ -1,18 +1,17 @@
-name: Workflow de Teste - Executar DanielaRobot
+name: Caller Workflow
 
-on: 
+on:
   push:
     branches:
-      - main  # O workflow é acionado em push para a branch 'main'
+      - main  # O workflow é acionado quando há um push para a branch principal
   pull_request:
     branches:
-      - main  # O workflow também é acionado para pull requests na branch 'main'
+      - main  # O workflow também é acionado para pull requests na branch principal
 
 jobs:
   call-reusable-workflow:
-    # Define um job que chama o workflow reutilizável
-    uses: ./.github/workflows/ci.yml  # Usando o workflow local no repositório atual
+    # Define o job que chama o workflow reutilizável
+    uses: ./.github/workflows/ci.yml  # Caminho correto para o workflow reutilizável
 
     with:
-      message: "Teste Realizado com sucesso"
-      # Passa a mensagem para o workflow reutilizável
+      message: "Teste Realizado com sucesso"  # Passa a mensagem para o workflow reutilizável
