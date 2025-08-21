@@ -3,7 +3,6 @@ import robocode.*;
 import java.awt.Color;
 
 
-
 public class DanielaRobot extends Robot {
 
     public void run() {
