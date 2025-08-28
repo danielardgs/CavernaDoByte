@@ -5,54 +5,48 @@ on:
     inputs:
       message:
         required: true
-        type: string  # Define que 'message' é um parâmetro obrigatório
+        type: string  
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Usa a máquina Ubuntu para executar os comandos
+    runs-on: ubuntu-latest 
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # Faz checkout do código do repositório
+        uses: actions/checkout@v2  
 
       - name: Set up Java
-        uses: actions/setup-java@v2  # Configura o Java
+        uses: actions/setup-java@v2  
         with:
-          java-version: '17'  # Usando Java 17
-          distribution: 'temurin'  # Usando a distribuição Temurin do OpenJDK
+          java-version: '17' 
+          distribution: 'temurin' 
 
       - name: Install Gradle
         run: |
           echo "Baixando e instalando o Gradle..."
           wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip -O gradle.zip
           unzip gradle.zip -d gradle
-          export PATH=$PATH:$(pwd)/gradle/gradle-7.5.1/bin  # Adiciona o Gradle ao PATH
-          gradle -v  # Exibe a versão do Gradle para verificar a instalação
+          export PATH=$PATH:$(pwd)/gradle/gradle-7.5.1/bin  
+          gradle -v  
 
       - name: Generate Gradle Wrapper
         run: |
           echo "Criando o Gradle Wrapper..."
-          gradle wrapper  # Cria o wrapper do Gradle
+          gradle wrapper  
 
       - name: Install Robocode (using robocode directory)
         run: |
           cd robocode  # Acessa a pasta 'robocode'
-          chmod +x gradlew  # Dá permissão de execução ao script gradlew
-          ./gradlew build  # Compila o código do Robocode
-          export ROBODECODE_HOME=$(pwd)  # Define a variável de ambiente para o Robocode
+          chmod +x gradlew 
+          ./gradlew build 
+          export ROBODECODE_HOME=$(pwd)  
 
       - name: Compile Java program
         run: |
           echo "Compilando o código Java..."
-          javac DanielaRobot.java  # Compila o arquivo .java
+          javac DanielaRobot.java  
 
       - name: Run Java program
-
-
-      git add .github/workflows/teste.yml  # Adiciona o arquivo de workflow principal
-git add .github/workflows/ci.yml  # Adiciona o arquivo de workflow reutilizável
-git commit -m "Configura o Gradle e a execução do Robocode corretamente"  # Comita as alterações
-git push origin main  # Faz o push para a branch principal
         run: |
           echo "Executando o código Java..."
-          java DanielaRobot  # Executa o código Java compilado
+          java DanielaRobot 
