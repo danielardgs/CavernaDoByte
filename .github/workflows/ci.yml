@@ -1,57 +1,62 @@
-name: Reusable Workflow
+name: CI - Teste, Qualidade e Segurança (Robocode Local)
 
 on:
-  workflow_call:
-    inputs:
-      message:
-        required: true
-        type: string 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest 
+  qualidade-seguranca:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2  
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v2  
+      - name: Instalar Java
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'  
-          distribution: 'temurin'  
+          distribution: 'temurin'
+          java-version: '11'
 
-      - name: Install Gradle
+      - name: Compilar DanielaRobot.java com dependência robocode.jar
+        run: javac -cp libs/robocode.jar DanielaRobot.java
+
+      - name: Baixar Checkstyle (10.12.4)
+        run: wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.12.4/checkstyle-10.12.4-all.jar -O checkstyle.jar
+
+      - name: Rodar Checkstyle
+        run: java -jar checkstyle.jar -c libs/google_checks.xml DanielaRobot.java
+
+      - name: Baixar SpotBugs
+        run: wget https://repo1.maven.org/maven2/com/github/spotbugs/spotbugs/4.8.3/spotbugs-4.8.3.tgz -O spotbugs.tgz
+
+      - name: Extrair SpotBugs
+        run: tar -xzf spotbugs.tgz
+
+      - name: Dar permissão de execução ao spotbugs
+        run: chmod +x spotbugs-4.8.3/bin/spotbugs
+
+      - name: Rodar SpotBugs
         run: |
-          echo "Baixando e instalando o Gradle..."
-          wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip -O gradle.zip
-          unzip gradle.zip -d gradle
-          export PATH=$PATH:$(pwd)/gradle/gradle-7.5.1/bin  # Adiciona o Gradle ao PATH
-          gradle -v  # Exibe a versão do Gradle para verificar a instalação
+          mkdir -p out
+          javac -cp libs/robocode.jar -d out DanielaRobot.java
+          spotbugs-4.8.3/bin/spotbugs -textui out/
+     
+      - name: Testar batalha automatizada
+        run: bash scripts/testar_batalha.sh
 
-      - name: Generate Gradle Wrapper
+      - name: Upload dos logs de batalha
+        uses: actions/upload-artifact@v4
+        with:
+          name: battle-logs
+          path: battle_logs/
+
+      - name: Exibir mensagem final de sucesso
+        if: ${{ success() }}
         run: |
-          echo "Criando o Gradle Wrapper..."
-          gradle wrapper  # Cria o wrapper do Gradle
-
-      - name: Install Robocode (using robocode directory)
-        run: |
-          cd robocode  # Acessa a pasta 'robocode'
-          chmod +x gradlew  # Dá permissão de execução ao script gradlew
-          ./gradlew build  # Compila o código do Robocode
-          export ROBODECODE_HOME=$(pwd)  # Define a variável de ambiente para o Robocode
-
-      - name: Compile Java program
-        run: |
-          echo "Compilando o código Java..."
-          javac DanielaRobot.java  # Compila o arquivo .java
-
-      - name: Run Java program
-
-
-git add .github/workflows/teste.yml 
-git add .github/workflows/ci.yml 
-git commit -m "Configura o Gradle e a execução do Robocode corretamente" 
-git push origin main  
-        run: |
-          echo "Executando o código Java..."
-          java DanielaRobot 
+          echo '🎉 CI executado com sucesso!'
+          echo 'Robô compilado, verificado com Checkstyle e analisado com SpotBugs.'
+          echo 'Arquivo usado: DanielaRobot.java'
+          echo 'Parabéns, pipeline completa e aprovada! 🚦'
